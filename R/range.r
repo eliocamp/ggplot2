@@ -14,7 +14,12 @@ Range <- ggproto("Range", NULL,
 
 RangeDiscrete <- ggproto("RangeDiscrete", Range,
   train = function(self, x, drop = FALSE, na.rm = FALSE) {
-    self$range <- scales::train_discrete(x, self$range, drop = drop, na.rm = na.rm)
+    range <- try(scales::train_discrete(x, self$range, drop = drop, na.rm = na.rm), silent = TRUE)
+    if (inherits(range, "try-error")) {
+      stop("Continuous value supplied to discrete scale: ", self$scale_name,
+           call. = FALSE)
+    }
+    self$range <- range
   }
 )
 
@@ -24,10 +29,10 @@ RangeContinuous <- ggproto("RangeContinuous", Range,
   }
 )
 
-continuous_range <- function() {
-  ggproto(NULL, RangeContinuous)
+continuous_range <- function(scale_name = NULL) {
+  ggproto(NULL, RangeContinuous, scale_name = scale_name)
 }
 
-discrete_range <- function() {
-  ggproto(NULL, RangeDiscrete)
+discrete_range <- function(scale_name = NULL) {
+  ggproto(NULL, RangeDiscrete, scale_name = scale_name)
 }

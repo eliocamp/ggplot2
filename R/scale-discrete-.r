@@ -135,7 +135,7 @@ ScaleDiscretePosition <- ggproto("ScaleDiscretePosition", ScaleDiscrete,
 
   clone = function(self) {
     new <- ggproto(NULL, self)
-    new$range <- discrete_range()
+    new$range <- discrete_range(scale_name = self$range$scale_name)
     new$range_c <- continuous_range()
     new
   }

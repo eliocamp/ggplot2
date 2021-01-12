@@ -192,7 +192,7 @@ discrete_scale <- function(aesthetics, scale_name, palette, name = waiver(),
     scale_name = scale_name,
     palette = palette,
 
-    range = discrete_range(),
+    range = discrete_range(scale_name = scale_name),
     limits = limits,
     na.value = na.value,
     na.translate = na.translate,
@@ -910,7 +910,7 @@ ScaleDiscrete <- ggproto("ScaleDiscrete", Scale,
 
   clone = function(self) {
     new <- ggproto(NULL, self)
-    new$range <- discrete_range()
+    new$range <- discrete_range(scale_name = self$range$scale_name)
     new
   },
 
