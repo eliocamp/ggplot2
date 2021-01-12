@@ -92,10 +92,15 @@ breaks are given explicetly.}
     \item{\code{right}}{Should values on the border between bins be part of the right
 (upper) bin?}
     \item{\code{show.limits}}{should the limits of the scale appear as ticks}
-    \item{\code{name}}{The name of the scale. Used as the axis or legend title. If
-\code{waiver()}, the default, the name of the scale is taken from the first
-mapping used for that aesthetic. If \code{NULL}, the legend title will be
-omitted.}
+    \item{\code{name}}{The name of the scale. Used as the axis or legend title. One of
+\itemize{
+\item \code{NULL} for no title.
+\item \code{waiver()}, the default, to take the name from the first
+mapping used for that aesthetic.
+\item A string to be used as title.
+\item A function that takes a string (the result from the logic of \code{waiver()})
+and returns a string to be used as title.
+}}
     \item{\code{breaks}}{One of:
 \itemize{
 \item \code{NULL} for no breaks

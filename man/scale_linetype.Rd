@@ -47,10 +47,15 @@ from a discrete scale, specify \code{na.translate = FALSE}.}
     \item{\code{aesthetics}}{The names of the aesthetics that this scale works with.}
     \item{\code{scale_name}}{The name of the scale that should be used for error messages
 associated with this scale.}
-    \item{\code{name}}{The name of the scale. Used as the axis or legend title. If
-\code{waiver()}, the default, the name of the scale is taken from the first
-mapping used for that aesthetic. If \code{NULL}, the legend title will be
-omitted.}
+    \item{\code{name}}{The name of the scale. Used as the axis or legend title. One of
+\itemize{
+\item \code{NULL} for no title.
+\item \code{waiver()}, the default, to take the name from the first
+mapping used for that aesthetic.
+\item A string to be used as title.
+\item A function that takes a string (the result from the logic of \code{waiver()})
+and returns a string to be used as title.
+}}
     \item{\code{labels}}{One of:
 \itemize{
 \item \code{NULL} for no labels

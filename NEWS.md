@@ -1,5 +1,9 @@
 # ggplot2 (development version)
 
+* The `name` argument of scale functions (including secondary axis) 
+now can be a function that will modify the default name taken from
+the aesthetic. (@eliocamp, #4313)
+
 * `ggsave()` now sets the default background to match the fill value of the
   `plot.background` theme element (@karawoo, #4057)
 

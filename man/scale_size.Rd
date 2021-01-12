@@ -50,10 +50,15 @@ scale_size_area(..., max_size = 6)
 scale_size_binned_area(..., max_size = 6)
 }
 \arguments{
-\item{name}{The name of the scale. Used as the axis or legend title. If
-\code{waiver()}, the default, the name of the scale is taken from the first
-mapping used for that aesthetic. If \code{NULL}, the legend title will be
-omitted.}
+\item{name}{The name of the scale. Used as the axis or legend title. One of
+\itemize{
+\item \code{NULL} for no title.
+\item \code{waiver()}, the default, to take the name from the first
+mapping used for that aesthetic.
+\item A string to be used as title.
+\item A function that takes a string (the result from the logic of \code{waiver()})
+and returns a string to be used as title.
+}}
 
 \item{breaks}{One of:
 \itemize{

@@ -8,10 +8,13 @@
 #' @param palette A palette function that when called with a numeric vector with
 #'   values between 0 and 1 returns the corresponding output values
 #'   (e.g., [scales::area_pal()]).
-#' @param name The name of the scale. Used as the axis or legend title. If
-#'   `waiver()`, the default, the name of the scale is taken from the first
-#'   mapping used for that aesthetic. If `NULL`, the legend title will be
-#'   omitted.
+#' @param name The name of the scale. Used as the axis or legend title. One of
+#'   - `NULL` for no title.
+#'   - `waiver()`, the default, to take the name from the first
+#'   mapping used for that aesthetic.
+#'   - A string to be used as title.
+#'   - A function that takes a string (the result from the logic of `waiver()`)
+#'   and returns a string to be used as title.
 #' @param breaks One of:
 #'   - `NULL` for no breaks
 #'   - `waiver()` for the default breaks computed by the
@@ -104,6 +107,18 @@ continuous_scale <- function(aesthetics, scale_name, palette, name = waiver(),
     limits <- trans$transform(limits)
   }
 
+  # Treat name as function if needed
+  if (is.formula(name)) {
+    name <- as_function(name)
+  }
+
+  if (is.function(name)) {
+    make_title <- name
+    name <- waiver()
+  } else {
+    make_title <- super$make_title
+  }
+
   ggproto(NULL, super,
     call = match.call(),
 
@@ -126,7 +141,9 @@ continuous_scale <- function(aesthetics, scale_name, palette, name = waiver(),
 
     labels = labels,
     guide = guide,
-    position = position
+    position = position,
+
+    make_title = make_title
   )
 }
 
@@ -185,6 +202,19 @@ discrete_scale <- function(aesthetics, scale_name, palette, name = waiver(),
     guide <- "none"
   }
 
+
+  # Treat name as function if needed
+  if (is.formula(name)) {
+    name <- as_function(name)
+  }
+
+  if (is.function(name)) {
+    make_title <- name
+    name <- waiver()
+  } else {
+    make_title <- super$make_title
+  }
+
   ggproto(NULL, super,
     call = match.call(),
 
@@ -203,7 +233,9 @@ discrete_scale <- function(aesthetics, scale_name, palette, name = waiver(),
     labels = labels,
     drop = drop,
     guide = guide,
-    position = position
+    position = position,
+
+    make_title = make_title
   )
 }
 
@@ -244,6 +276,18 @@ binned_scale <- function(aesthetics, scale_name, palette, name = waiver(),
     limits <- trans$transform(limits)
   }
 
+  # Treat name as function if needed
+  if (is.formula(name)) {
+    name <- as_function(name)
+  }
+
+  if (is.function(name)) {
+    make_title <- name
+    name <- waiver()
+  } else {
+    make_title <- super$make_title
+  }
+
   ggproto(NULL, super,
     call = match.call(),
 
@@ -268,7 +312,9 @@ binned_scale <- function(aesthetics, scale_name, palette, name = waiver(),
 
     labels = labels,
     guide = guide,
-    position = position
+    position = position,
+
+    make_title = make_title
   )
 }
 

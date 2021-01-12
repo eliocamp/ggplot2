@@ -36,10 +36,15 @@ associated with this scale.}
 values between 0 and 1 returns the corresponding output values
 (e.g., \code{\link[scales:area_pal]{scales::area_pal()}}).}
 
-\item{name}{The name of the scale. Used as the axis or legend title. If
-\code{waiver()}, the default, the name of the scale is taken from the first
-mapping used for that aesthetic. If \code{NULL}, the legend title will be
-omitted.}
+\item{name}{The name of the scale. Used as the axis or legend title. One of
+\itemize{
+\item \code{NULL} for no title.
+\item \code{waiver()}, the default, to take the name from the first
+mapping used for that aesthetic.
+\item A string to be used as title.
+\item A function that takes a string (the result from the logic of \code{waiver()})
+and returns a string to be used as title.
+}}
 
 \item{breaks}{One of:
 \itemize{

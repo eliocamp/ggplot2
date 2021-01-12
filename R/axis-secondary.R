@@ -6,8 +6,13 @@
 #'
 #' @param trans A formula or function of transformation
 #'
-#' @param name The name of the secondary axis
-#'
+#' @param name The name of the secondary axis. Used as the axis or legend title.
+#' One of:
+#'   - `NULL` for no title.
+#'   - `derive()`, to take the name from the primary axis
+#'   - A string to be used as title.
+#'   - A function that takes a string (the result from the logic of `derived()`)
+#'   and returns a string to be used as title.'
 #' @param breaks One of:
 #'   - `NULL` for no breaks
 #'   - `waiver()` for the default breaks computed by the transformation object
@@ -123,6 +128,17 @@ set_sec_axis <- function(sec.axis, scale) {
   if (!is.waive(sec.axis)) {
     if (is.formula(sec.axis)) sec.axis <- sec_axis(sec.axis)
     if (!is.sec_axis(sec.axis)) abort("Secondary axes must be specified using 'sec_axis()'")
+
+    # Treat name as function if needed
+    if (is.formula(sec.axis$name)) {
+      sec.axis$name <- as_function(sec.axis$name)
+    }
+
+    if (is.function(sec.axis$name)) {
+      sec.axis$make_title <- sec.axis$name
+      sec.axis$name <- derive()   # Use derived name to inherit name from aes
+    }
+
     scale$secondary.axis <- sec.axis
   }
   return(scale)
